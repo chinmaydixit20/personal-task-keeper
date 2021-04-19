@@ -5,7 +5,7 @@ const config = require('config');
 const jwt = require('jsonwebtoken');
 const auth = require('../middleware/auth');
 
-router.route('/register').post((req, res) => {
+router.post('/register', (req, res) => {
     const { username, email, password } = req.body;
     if(!username || !email || !password) {
         return res.status(400).json({ msg: 'Please fill all fields' });
@@ -44,15 +44,19 @@ router.route('/register').post((req, res) => {
                             });
                         }
                     )
+                }).catch(err => {
+                    return res.status(500).json({ msg: err })
                 })
             })
         })
+    }).catch(err => {
+        return res.status(500).json({ msg: err })
     })
 })
 
-router.route('/login').post((req, res) => {
-    const { username, email, password } = req.body;
-    if(!username || !email || !password) {
+router.post('/login', (req, res) => {
+    const { username, password } = req.body;
+    if(!username || !password) {
         return res.status(400).json({ msg: 'Please fill all fields' });
     }
 
@@ -81,10 +85,12 @@ router.route('/login').post((req, res) => {
                 }
             )
         })
+    }).catch(err => {
+        return res.status(401).json({ msg: err })
     })
 })
 
-router.get('/getUser', auth, (req, res) => {
+router.get('/', auth, (req, res) => {
     User.findById(req.user.id)
         .select("-password")
         .then(user => res.json(user));
