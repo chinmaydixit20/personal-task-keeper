@@ -6,7 +6,8 @@ router.route('/new').post((req, res) => {
     const newTask = new Task({
         name: req.body.name,
         description: req.body.description,
-
+        datetime: req.body.datetime,
+        creator: req.body.creator
     })
 })
 

@@ -93,7 +93,12 @@ router.post('/login', (req, res) => {
 router.get('/', auth, (req, res) => {
     User.findById(req.user.id)
         .select("-password")
-        .then(user => res.json(user));
+        .then(user => {
+            if(!user) {
+                return res.status(401).json({ msg: "Login first!" })
+            }
+            return res.json(user)
+        });
 })
 
 module.exports = router;

@@ -2,8 +2,9 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import LoginForm from './components/LoginForm'; 
 import SignupForm from './components/SignupForm';
+import Dashboard from './components/Dashboard'
 import UserContext from './usercontext';
-import { Redirect, useHistory } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import './App.css'
 import {
   Switch, 
@@ -33,7 +34,7 @@ function App() {
           user: res.data
         });
       }).catch(err => {
-        console.log("Hello" + err);
+        console.log(err.response.data.msg);
       })
     }
 
@@ -59,9 +60,9 @@ function App() {
           </Route>
           <Route path="/dashboard" render={() => {
             return (
-              userData.token ?
-              <Redirect to="/dashboard" /> :
-              <Redirect to="/login" />
+              userData.token 
+              ? <Dashboard />  
+              : <Redirect to="/login" />
             )
           }} />
         </Switch>

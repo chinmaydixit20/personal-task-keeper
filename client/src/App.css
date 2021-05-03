@@ -1,15 +1,23 @@
-.App {
+.LoginForm, .SignupForm {
     width: 100%;
     max-width: 500px;
-    padding: 15px;
     margin: auto;
+    margin-top: 40px;;
     height: 100%;
-}
-
-.LoginForm, .SignupForm {
+    
     padding: 40px;
     box-sizing: border-box;
     background-color: rgba(149, 165, 166, 0.1);
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
     border-radius: 20px;
+
 }
+
+.sidebar {
+    min-width: 300px;
+    max-width: 300px;
+    background-color: rgba(149, 165, 166, 0.1);
+    height: calc(100vh - 60px);
+    border-right: 1.5px solid rgba(149, 165, 166, 0.15);
+}
+

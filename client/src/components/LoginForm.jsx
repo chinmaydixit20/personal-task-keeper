@@ -21,9 +21,6 @@ const LoginForm = (props) => {
         if(localStorage.getItem("auth-token") === userData.token) {
             history.push("/dashboard");
         }
-        else {
-            history.push("/login");
-        }
     });
 
     const handleSubmit = (e) => {
@@ -33,7 +30,6 @@ const LoginForm = (props) => {
             username: userCred.username,
             password: userCred.password
         }
-        console.log("click")
         axios.post("http://localhost:8000/users/login", user).then(res => {
             setUserData({
                 token: res.data.token,

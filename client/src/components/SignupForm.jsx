@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import axios from 'axios'
 import {
     Button, Form, FormGroup,
@@ -19,8 +19,20 @@ const SignupForm = (props) => {
 
     const history = useHistory();
 
+    useEffect(() => {
+        if(localStorage.getItem("auth-token") === userData.token) {
+            history.push("/dashboard");
+        }
+        else {
+            history.push("/signup");
+        }
+    });
+
     const handleSubmit = (e) => {
         e.preventDefault();
+        if(userCred.password.length < 8) {
+            setError(true);
+        }
         const user = {
             username: userCred.username,
             email: userCred.email,
@@ -46,27 +58,27 @@ const SignupForm = (props) => {
                 history.push("/dashboard");
 
             }).catch(err => {
-                console.log(err.response.msg);
+                console.log(err.response.data.msg);
                 setError(true);
             })
         }).catch(err => {
             if(err.response) {
-                console.log(err.response.msg)
+                console.log(err.response.data.msg)
                 setError(true);
             }
         })
     }
 
     return (
-        <div>
+        <div className="SignupForm" >
             <Alert color="danger" isOpen={error} toggle={() => setError(false)}>
-                Sorry, your username or password are incorrect. Please check your details.
+                Details filled are incorrect.
             </Alert>
-            <Form className="SignupForm" onSubmit={handleSubmit}>
+            <Form onSubmit={handleSubmit}>
                 <h1>
                     <span className="font-weight-bold">Personal Task</span> Keeper
                 </h1>
-                <h3 className="text-center pt-3">Welcome</h3>
+                <h3 className="text-center pt-3">Sign Up</h3>
                 <FormGroup>
                     <Label>Username</Label>
                     <Input type="text" placeholder="Username" value={userCred.username} onChange={e => setUserCred({
