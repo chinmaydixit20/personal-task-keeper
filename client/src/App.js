@@ -4,11 +4,11 @@ import LoginForm from './components/LoginForm';
 import SignupForm from './components/SignupForm';
 import Dashboard from './components/Dashboard'
 import UserContext from './usercontext';
-import { Redirect } from 'react-router-dom';
 import './App.css'
 import {
   Switch, 
-  Route
+  Route, 
+  Redirect
 } from 'react-router-dom';
 
 function App() {
@@ -16,9 +16,11 @@ function App() {
     token: null,
     user: null
   });
-
+  const [loading, setLoading] = useState(false);
+  
   useEffect(() => {
     const loggedIn = () => {
+      setLoading(true);
       let token = localStorage.getItem("auth-token");
       if(token === null) {
         localStorage.setItem("auth-token", "");
@@ -36,13 +38,15 @@ function App() {
       }).catch(err => {
         console.log(err.response.data.msg);
       })
+      setLoading(false);
     }
-
     loggedIn();
   });
 
   return (
-    <UserContext.Provider value={{ userData, setUserData }}>
+    loading
+    ? <div>Hello</div>
+    : <UserContext.Provider value={{ userData, setUserData }}>
       <div className="App">
         <Switch>
           <Route path="/" exact render={() => {
@@ -58,13 +62,9 @@ function App() {
           <Route path="/signup" exact>
             <SignupForm />
           </Route>
-          <Route path="/dashboard" render={() => {
-            return (
-              userData.token 
-              ? <Dashboard />  
-              : <Redirect to="/login" />
-            )
-          }} />
+          <Route path="/dashboard" >
+            <Dashboard />
+          </Route>
         </Switch>
       </div>
     </UserContext.Provider>

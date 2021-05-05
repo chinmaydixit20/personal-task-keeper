@@ -13,11 +13,49 @@
 
 }
 
+.update-modal {
+  width: 700px !important;
+  height: 650px;
+}
+
+#textareaId {
+  min-height: 380px;
+  resize: none;
+}
+
 .sidebar {
-    min-width: 300px;
+    
     max-width: 300px;
     background-color: rgba(149, 165, 166, 0.1);
     height: calc(100vh - 60px);
     border-right: 1.5px solid rgba(149, 165, 166, 0.15);
 }
 
+#taskId, #datetimeId {
+  border: none;
+}
+
+#textareaId {
+  border: 1px solid rgba(149, 165, 166, 0.2);
+}
+
+#taskId:focus {
+  transition: 1s linear;
+  border-bottom: 1px solid rgba(149, 165, 166, 0.3);
+  outline: none !important;
+  box-shadow: none;
+}
+
+#textareaId:focus {
+    transition: 1s linear;
+    border-bottom: 3px solid rgba(149, 165, 166, 0.3);
+    outline: none !important;
+    box-shadow: none;
+}
+
+#datetimeId:focus {
+  transition: 1s linear;
+  border-bottom: 1px solid rgba(149, 165, 166, 0.3);
+  outline: none !important;
+  box-shadow: none;
+}
